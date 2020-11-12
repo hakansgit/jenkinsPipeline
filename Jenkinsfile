@@ -96,11 +96,11 @@ pipeline{
                     if [ "$running" != '' ]
                     then
                         docker-compose down
-                        exist="$(aws eks list-clusters | grep matts-cluster2)" || true
+                        exist="$(aws eks list-clusters | grep hakan-pythonJenkins-cluster)" || true
                         if [ "$exist" == '' ]
                         then
                             eksctl create cluster \
-                                --name matts-cluster2 \
+                                --name hakan-pythonJenkins-cluster \
                                 --version 1.18 \
                                 --region us-east-1 \
                                 --nodegroup-name my-nodes \
@@ -109,7 +109,7 @@ pipeline{
                                 --nodes-min 1 \
                                 --nodes-max 2 \
                                 --ssh-access \
-                                --ssh-public-key  hakanJenkinsKey3_public.pem \
+                                --ssh-public-key hakanJenkinsKey3_public.pem \
                                 --managed
                         else
                             echo 'no need to create cluster...'
