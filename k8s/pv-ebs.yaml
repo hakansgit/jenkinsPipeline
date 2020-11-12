@@ -8,6 +8,7 @@ spec:
   storageClassName: manual
   capacity:
     storage: "10Gi" 
+  resources: request
   accessModes:
     - "ReadWriteMany"
   awsElasticBlockStore: 
