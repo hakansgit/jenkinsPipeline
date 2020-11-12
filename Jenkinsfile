@@ -148,7 +148,7 @@ pipeline{
                 sh "sed -i 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
                 sh '''
                     podName=$(kubectl get pod | grep deployment-app | cut -d" " -f1)
-                    kubectl delete "$podName"
+                    kubectl delete pod "$podName"
                 '''
                 sh "kubectl apply -f k8s"                
             }
