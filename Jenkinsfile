@@ -146,6 +146,10 @@ pipeline{
                     env.EBS_VOLUME_ID = sh(script:"aws ec2 describe-volumes --region us-east-2 --filters Name=tag:Name,Values='k8s-python-mysql-app' | grep VolumeId |cut -d '\"' -f 4| head -n 1", returnStdout: true).trim()
                 }
                 sh "sed -i 's/{{EBS_VOLUME_ID}}/$EBS_VOLUME_ID/g' k8s/pv-ebs.yaml"
+                sh '''
+                    podName=$(kubectl get pod | grep deployment-app | cut -d" " -f1)
+                    kubectl delete "$podName"
+                '''
                 sh "kubectl apply -f k8s"                
             }
             post {
